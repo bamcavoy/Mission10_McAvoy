@@ -22,10 +22,13 @@ namespace API_fun.Controllers
             // Fetch the team information for each bowler
             foreach (var bowler in bowlerData)
             {
-                bowler.Team = _bowlingRepository.Teams.FirstOrDefault(t => t.TeamID == bowler.TeamID);
+                bowler.Team = _bowlingRepository.Teams.FirstOrDefault(t => t.TeamID == bowler.TeamID && (t.TeamName == "Marlins" || t.TeamName == "Sharks"));
             }
 
-            return bowlerData;
+            // Filter bowlers based on team membership
+            var filteredBowlerData = bowlerData.Where(b => b.Team != null);
+
+            return filteredBowlerData;
         }
     }
 }
